@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="edu.pdx.cs410J.pmudgal.AppointmentTest" time="0.006" tests="2" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="edu.pdx.cs410J.pmudgal.AppointmentTest" time="0.026" tests="3" errors="0" skipped="0" failures="2">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_77\jre\bin"/>
@@ -28,7 +28,7 @@
     <property name="os.name" value="Windows 10"/>
     <property name="classworlds.conf" value="D:\apache-maven-3.3.9-bin\apache-maven-3.3.9\bin\..\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_77\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Lenovo\FusionEngine;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Common Files\lenovo\easyplussdk\bin;C:\Program Files (x86)\Lenovo\Password Manager\;C:\Program Files\OpenVPN\bin;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Skype\Phone\;D:\apache-maven-3.3.9-bin\apache-maven-3.3.9\bin\;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_77\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Lenovo\FusionEngine;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Common Files\lenovo\easyplussdk\bin;C:\Program Files (x86)\Lenovo\Password Manager\;C:\Program Files\OpenVPN\bin;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Skype\Phone\;D:\apache-maven-3.3.9-bin\apache-maven-3.3.9\bin\;C:\Program Files\Git\cmd;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -62,6 +62,17 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="initiallyAllAppointmentsHaveTheSameDescription" classname="edu.pdx.cs410J.pmudgal.AppointmentTest" time="0.002"/>
+  <testcase name="initiallyAllAppointmentsHaveTheSameDescription" classname="edu.pdx.cs410J.pmudgal.AppointmentTest" time="0.017">
+    <failure message="&#10;Expected: a string containing &quot;not implemented&quot;&#10;     but: was null" type="java.lang.AssertionError">java.lang.AssertionError: 
+
+Expected: a string containing "not implemented"
+     but: was null
+	at edu.pdx.cs410J.pmudgal.AppointmentTest.initiallyAllAppointmentsHaveTheSameDescription(AppointmentTest.java:22)
+</failure>
+  </testcase>
   <testcase name="forProject1ItIsOkayIfGetBeginTimeReturnsNull" classname="edu.pdx.cs410J.pmudgal.AppointmentTest" time="0"/>
+  <testcase name="getBeginTimeStringNeedsToBeImplemented" classname="edu.pdx.cs410J.pmudgal.AppointmentTest" time="0">
+    <failure message="Expected exception: java.lang.UnsupportedOperationException" type="java.lang.AssertionError">java.lang.AssertionError: Expected exception: java.lang.UnsupportedOperationException
+</failure>
+  </testcase>
 </testsuite>

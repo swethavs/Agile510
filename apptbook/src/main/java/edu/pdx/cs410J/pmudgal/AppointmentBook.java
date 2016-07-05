@@ -29,10 +29,7 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment> {
 
     }
 
-//    public void setAppointments(ArrayList<Appointment> appointments) {
 
-//    }
-//        this.appointments = appointments;
 public void setOwnerName(String ownerName) {
     this.ownerName = ownerName;
 }

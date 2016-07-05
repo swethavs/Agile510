@@ -1,4 +1,14 @@
 -------------------------------------------------------------------------------
 Test set: edu.pdx.cs410J.pmudgal.AppointmentTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 sec - in edu.pdx.cs410J.pmudgal.AppointmentTest
+Tests run: 3, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.026 sec <<< FAILURE! - in edu.pdx.cs410J.pmudgal.AppointmentTest
+initiallyAllAppointmentsHaveTheSameDescription(edu.pdx.cs410J.pmudgal.AppointmentTest)  Time elapsed: 0.017 sec  <<< FAILURE!
+java.lang.AssertionError: 
+
+Expected: a string containing "not implemented"
+     but: was null
+	at edu.pdx.cs410J.pmudgal.AppointmentTest.initiallyAllAppointmentsHaveTheSameDescription(AppointmentTest.java:22)
+
+getBeginTimeStringNeedsToBeImplemented(edu.pdx.cs410J.pmudgal.AppointmentTest)  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.AssertionError: Expected exception: java.lang.UnsupportedOperationException
+

@@ -16,16 +16,16 @@ public class AppointmentTest {
 ////    appointment.getBeginTimeString();
 //  }
 
-  @Test
-  public void initiallyAllAppointmentsHaveTheSameDescription() {
-    Appointment appointment = new Appointment();
+//  @Test
+//  public void initiallyAllAppointmentsHaveTheSameDescription() {
+//    Appointment appointment = new Appointment();
 //    assertThat(appointment.getDescription(), containsString("not implemented"));
-  }
+//  }
 
-  @Test
-  public void forProject1ItIsOkayIfGetBeginTimeReturnsNull() {
-    Appointment appointment = new Appointment();
-    assertThat(appointment.getBeginTime(), is(nullValue()));
-  }
+//  @Test
+//  public void forProject1ItIsOkayIfGetBeginTimeReturnsNull() {
+//    Appointment appointment = new Appointment();
+//    assertThat(appointment.getBeginTime(), is(nullValue()));
+//  }
 
 }

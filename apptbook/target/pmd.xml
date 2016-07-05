@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="5.3.5" timestamp="2016-07-04T14:20:21.836">
+<file name="C:\Users\Vijay\workspace\apptbook\src\main\java\edu\pdx\cs410J\pmudgal\Project1.java">
+<violation beginline="5" endline="5" begincolumn="1" endcolumn="48" rule="UnusedImports" ruleset="Import Statements" package="edu.pdx.cs410J.pmudgal" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'javax.swing.plaf.synth.SynthEditorPaneUI'
+</violation>
+<violation beginline="25" endline="25" begincolumn="15" endcolumn="15" rule="UnusedLocalVariable" ruleset="Unused Code" package="edu.pdx.cs410J.pmudgal" class="Project1" method="main" variable="c" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/unusedcode.html#UnusedLocalVariable" priority="3">
+Avoid unused local variables such as 'c'.
+</violation>
+<violation beginline="159" endline="159" begincolumn="58" endcolumn="60" rule="UnusedFormalParameter" ruleset="Unused Code" package="edu.pdx.cs410J.pmudgal" class="Project1" method="isValidOptionAsArgument" variable="arg" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused method parameters such as 'arg'.
+</violation>
+<violation beginline="159" endline="159" begincolumn="27" endcolumn="61" rule="UnusedPrivateMethod" ruleset="Unused Code" package="edu.pdx.cs410J.pmudgal" class="Project1" method="isValidOptionAsArgument" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/unusedcode.html#UnusedPrivateMethod" priority="3">
+Avoid unused private methods such as 'isValidOptionAsArgument(String)'.
+</violation>
+</file>
+<file name="C:\Users\Vijay\workspace\apptbook\src\main\java\edu\pdx\cs410J\pmudgal\Project1_bck.java">
+<violation beginline="11" endline="11" begincolumn="1" endcolumn="25" rule="UnusedImports" ruleset="Import Statements" package="edu.pdx.cs410J.pmudgal" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.util.Scanner'
+</violation>
+<violation beginline="12" endline="12" begincolumn="1" endcolumn="33" rule="UnusedImports" ruleset="Import Statements" package="edu.pdx.cs410J.pmudgal" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.util.StringTokenizer'
+</violation>
+<violation beginline="24" endline="24" begincolumn="15" endcolumn="15" rule="UnusedLocalVariable" ruleset="Unused Code" package="edu.pdx.cs410J.pmudgal" class="Project1_bck" method="main" variable="c" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/unusedcode.html#UnusedLocalVariable" priority="3">
+Avoid unused local variables such as 'c'.
+</violation>
+</file>
+</pmd>

@@ -18,7 +18,7 @@ public class Project1 {
     /**
      *This is the main method of class which calls prepareApointmentBook
      * and adds the appointment to appointmentBook.
-     * @param args
+     * @param args : Command line arguments
      */
     public static void main(String[] args) {
 
@@ -28,6 +28,8 @@ public class Project1 {
         } catch (ParseException e) {
             System.out.println("Please provide the date and time in format mm/dd/yyyy hh:mm");
             System.exit(1);
+        } catch (Exception e){
+            e.getMessage();
         }
     }
 
@@ -38,9 +40,9 @@ public class Project1 {
      * The passed arguments for sppointments are added to appointmentBook.
      * It also checks if the beginTime and endTime are in correct format.
      * In any error scenario case, and error message is shown and program exits.
-     * @param args
-     * @param appointmentBook
-     * @throws ParseException
+     * @param args : Command line Arguments
+     * @param appointmentBook : the appointment book which would contain appointments
+     * @throws ParseException : In case of any exception while parsing the dates.
      */
     public static void prepareAppointmentBook(String[] args, AppointmentBook appointmentBook) throws ParseException {
         Appointment appointment = new Appointment();
@@ -53,7 +55,7 @@ public class Project1 {
             for (int i = 0; i < args.length; i++) {
                 if (args[i].startsWith("-")) {
                     if (args[i].contains(Constants.PRINT)) {
-                        System.out.println("Printing the Appointment : " + args[2]);
+                        System.out.println("Printing the Appointment : " + (args.length>2?args[2]:"No description provided in command line."));
                         i++;
                     } else {
                         System.out.println(args[i]+ ": This is not a correct option. Please provide the correct option.");
@@ -70,6 +72,7 @@ public class Project1 {
                     System.out.println(appointment.getDescription());
                     System.out.println(appointment.getBeginTimeString());
                     System.out.println(appointment.getEndTimeString());
+                    System.out.println(appointment.toString());
                 } else if( args.length - i < 6){
                     System.out.println("Some arguments are missing. Please provide complete arguments : owner description beginDateTime endDateTime");
                     System.exit(1);
@@ -86,7 +89,7 @@ public class Project1 {
     /**
      * This method checks if the passed argument is valid Owner
      * or it is some option and not arg.
-     * @param arg
+     * @param arg : ownerName of the appointment
      * @return
      */
     private static String validateOwnerName(String arg) {
@@ -153,7 +156,7 @@ public class Project1 {
      * This method is not used currently, however,
      * I have not removed this method as this may be
      * used for future functionality.
-     * @param appointment
+     * @param appointment : appointment is passed to compare eend dates and begin dat
      * @return
      */
     private static boolean compareEndDateBeginDate(Appointment appointment){

@@ -44,7 +44,7 @@ public class Project1 {
      * @param appointmentBook : the appointment book which would contain appointments
      * @throws ParseException : In case of any exception while parsing the dates.
      */
-    public static void prepareAppointmentBook(String[] args, AppointmentBook appointmentBook) throws ParseException {
+    public static AppointmentBook prepareAppointmentBook(String[] args, AppointmentBook appointmentBook) throws ParseException {
         Appointment appointment = new Appointment();
 
         if(args.length==0){
@@ -68,10 +68,6 @@ public class Project1 {
                     appointment.setBeginTimeString(checkDateTimeFormat(checkNull(args[++i], "beginDateTime").concat(" ").concat(checkNull(args[++i], "beginDateTime"))));
                     appointment.setEndTimeString(checkDateTimeFormat(checkNull(args[++i], "endDateTime").concat(" ").concat(checkNull(args[++i], "endDateTime"))));
                     appointmentBook.addAppointment(appointment);
-                    System.out.println(appointment.getOwner());
-                    System.out.println(appointment.getDescription());
-                    System.out.println(appointment.getBeginTimeString());
-                    System.out.println(appointment.getEndTimeString());
                     System.out.println(appointment.toString());
                 } else if( args.length - i < 6){
                     System.out.println("Some arguments are missing. Please provide complete arguments : owner description beginDateTime endDateTime");
@@ -84,6 +80,7 @@ public class Project1 {
             }
 
         }
+        return appointmentBook;
     }
 
     /**

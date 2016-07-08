@@ -5,6 +5,7 @@ package edu.pdx.cs410J.pmudgal;
  */
 public class Constants {
     public static final String PRINT="-print";
+    public static final String TEXTFILE="-textfile";
     public static final String README="-README";
     public static final String PROVIDE_ARG="Please provide the arguments in order: owner description beginDateTime endDateTime";
 

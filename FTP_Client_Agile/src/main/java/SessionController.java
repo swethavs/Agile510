@@ -51,14 +51,10 @@ public class SessionController {
             }
 
         }else  if (command.equals("mkdir")) {
-            Vector result = execmkdir();
-
-            Iterator myiterator = result.iterator();
-            while (myiterator.hasNext()) {
-                ChannelSftp.LsEntry current = (ChannelSftp.LsEntry)myiterator.next();
-                System.out.println(current.toString());
+            String[] commandArgs = command.split(" ");
+            if(commandArgs.length>1){
+             execmkdir(commandArgs[1]);
             }
-
         }
     }
 

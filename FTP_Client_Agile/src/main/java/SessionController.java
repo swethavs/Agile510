@@ -50,8 +50,19 @@ public class SessionController {
                 System.out.println(current.toString());
             }
 
+        }else  if (command.equals("mkdir")) {
+            Vector result = execmkdir();
+
+            Iterator myiterator = result.iterator();
+            while (myiterator.hasNext()) {
+                ChannelSftp.LsEntry current = (ChannelSftp.LsEntry)myiterator.next();
+                System.out.println(current.toString());
+            }
+
         }
     }
+
+
 
     public Vector execls() {
         Vector vector = null;
@@ -63,6 +74,17 @@ public class SessionController {
             e.printStackTrace();
         }
         return vector;
+    }
+
+    public boolean execmkdir(String foldername) {
+        try {
+            sftp.mkdir(foldername);
+            return true;
+        } catch (SftpException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     public void closeSession() {

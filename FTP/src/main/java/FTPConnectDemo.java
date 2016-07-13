@@ -78,9 +78,6 @@ public class FTPConnectDemo {
 
             if (!controller.setUpConnection(prop.getProperty("remoteservername"), Integer.parseInt(prop.getProperty("port"))
                     , prop.getProperty("uname"), prop.getProperty("password"))) {
-               /* if (!controller.setUpConnection("linuxlab.cs.pdx.edu", 22,"pmudgal","vyzX6$2xbf")){
-//                    , prop.getProperty("uname"), prop.getProperty("password"))) {*/
-
                 System.out.println("Connection fails");
                 System.exit(1);
             }

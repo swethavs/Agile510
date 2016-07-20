@@ -73,6 +73,12 @@ public class SessionController {
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }
+        }else if(command.equals("quit") || command.equals("Quit") ){
+            try{
+                execQuit(command);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -170,7 +176,11 @@ public class SessionController {
         }
     }
 
-
+    /**
+     * This method handles the change permission commands.
+     * @param command
+     * @return
+     */
     public boolean execchmod(String command){
         String[] commandArgs = command.split(" ");
         try {
@@ -189,6 +199,12 @@ public class SessionController {
         }
     }
 
+    public boolean execQuit(String command){
+        if(command.equals("quit") || command.equals("Quit") ){
+            sftp.quit();
+        }
+        return true;
+    }
     /**
      * This method is closing the session
      */

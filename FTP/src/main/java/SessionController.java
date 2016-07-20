@@ -20,22 +20,24 @@ public class SessionController {
     private static Properties prop = new Properties();
     private static InputStream input = null;
 
+    /**
+     * This method establishes the connection to FTP server
+     * @param host
+     * @param port
+     * @param user
+     * @param password
+     * @return
+     */
     public boolean setUpConnection(String host, int port, String user, String password) {
-
         JSch jsch = new JSch();
-
         try {
             Session session = jsch.getSession(user, host, port);
-
             session.setConfig("StrictHostKeyChecking", "no");
             session.setPassword(password);
-
             session.connect(3000);
-
             Channel channel = session.openChannel("sftp");
             sftp = (ChannelSftp) channel;
             sftp.connect(3000);
-
         } catch (JSchException e) {
             e.printStackTrace();
             return false;
@@ -44,35 +46,40 @@ public class SessionController {
         return true;
     }
 
+    /**
+     * This method is executing the commands asked by user.
+     * @param command
+     */
     public void execCommand(String command) {
         if (command.equals("ls")) {
             Vector result = execls();
-
             Iterator myiterator = result.iterator();
             while (myiterator.hasNext()) {
                 ChannelSftp.LsEntry current = (ChannelSftp.LsEntry)myiterator.next();
                 System.out.println(current.toString());
             }
-
-        }else  if (command.contains("mkdir")) {
-            String[] commandArgs = command.split(" ");
-            if(commandArgs.length>1){
-             execmkdir(commandArgs[1]);
-            } else{
-                System.out.println("Please provide the directory name");
-            }
-        } else if (command.equals("rd"))
-        {
+        }else if (command.startsWith("mkdir")) {
+            execmkdir(command);
+        } else if (command.equals("rd")) {
             try{
                 GetSingleFileRemotely();
             }
-            catch(Exception e)
-            {
+            catch(Exception e) {
                 System.out.println("Error while getting the file remotely" +e);
+            }
+        }else if (command.startsWith("chmod")){
+            try {
+                execchmod(command);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
             }
         }
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     public static void GetSingleFileRemotely() throws Exception  {
         try {
             input = new FileInputStream("ftp.properties");
@@ -80,15 +87,11 @@ public class SessionController {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-
         // load a properties file
         prop.load(input);
-
-
         System.out.println("Enter file name to download:");
         String fileToDownload = inp.nextLine();
         OutputStream os;
-
         String pwd = null;
         try {
             pwd = sftp.pwd();
@@ -96,21 +99,16 @@ public class SessionController {
             System.out.println("fileToDownload is"+fileToDownload);
             SessionController ctr = new SessionController();
             ctr.execCommand("ls");
-
         } catch (SftpException e) {
             e.printStackTrace();
         }
-
         /*if (fileToDownload.trim().isEmpty()) {
             System.out.println("Filename cannot be blank.\n");
             return;
         }*/
-
         try {
             //String fdest = "/Users/madusudanan/Downloads/scheduler.txt";
             String fDestDir = prop.getProperty("directorytodownload");
-
-
             sftp.get(fileToDownload,fDestDir);
             System.out.println("file successfully downloaded and saved in the path" +fDestDir);
 
@@ -135,7 +133,10 @@ public class SessionController {
     }
 
 
-
+    /**
+     *
+     * @return
+     */
     public Vector execls() {
         Vector vector = null;
         try {
@@ -148,17 +149,49 @@ public class SessionController {
         return vector;
     }
 
-    public boolean execmkdir(String foldername) {
+    /**
+     * This method is making the directory on remote
+     * @param command
+     * @return
+     */
+    public boolean execmkdir(String command) {
+        String[] commandArgs = command.split(" ");
         try {
-            sftp.mkdir(foldername);
-            return true;
+            if (commandArgs.length > 1) {
+                sftp.mkdir(commandArgs[1]);
+                return true;
+            } else {
+                System.out.println("Please provide the directory name");
+                return false;
+            }
         } catch (SftpException e) {
             e.printStackTrace();
             return false;
         }
-
     }
 
+
+    public boolean execchmod(String command){
+        String[] commandArgs = command.split(" ");
+        try {
+            if (commandArgs.length > 2) {
+                int permissionType = Integer.parseInt(commandArgs[1]);
+                String filename = commandArgs[2];
+                sftp.chmod(permissionType,filename);
+                return true;
+            } else {
+                System.out.println("Please provide the command properly");
+                return false;
+            }
+        } catch (SftpException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * This method is closing the session
+     */
     public void closeSession() {
         session.disconnect();
     }

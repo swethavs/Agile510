@@ -1,16 +1,15 @@
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.SftpException;
-
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 import java.util.Scanner;
 
-import org.apache.commons.net.ftp.FTPClient;
-
+/**
+ * This class loads the property file containing login credentials
+ * establishes the connection to FTP server by calling SessionController
+ * and asks for the command to input.
+ */
 public class FTPConnectDemo {
 
     private static final int FTP_TIMEOUT = 3000;
@@ -19,27 +18,21 @@ public class FTPConnectDemo {
     private static InputStream input = null;
 
 
-
+    /**
+     * main method
+     * @param args
+     */
     public static void main(String[] args) {
-
-
         try {
             input = new FileInputStream("ftp.properties");
-
-
             // load a properties file
-
             prop.load(input);
-
-
             SessionController controller = new SessionController();
-
             if (!controller.setUpConnection(prop.getProperty("remoteservername"), Integer.parseInt(prop.getProperty("port"))
                     , prop.getProperty("uname"), prop.getProperty("password"))) {
                 System.out.println("Connection fails");
                 System.exit(1);
             }
-
             userIO(controller);
             controller.closeSession();
         } catch (FileNotFoundException e1) {
@@ -54,8 +47,11 @@ public class FTPConnectDemo {
     }
 
 
-    //FTPClient ftpClient = new FTPClient();
-
+    /**
+     *This method asks the user to provide the desired command
+     * and perform the operation specific to command.
+     * @param controller
+     */
     public static void userIO(SessionController controller) {
         System.out.println("Please enter your command:");
         String command = scanner.next();

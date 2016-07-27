@@ -73,47 +73,87 @@ public class SessionController {
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }
-        }else if(command.equals("quit") || command.equals("Quit") ){
-            try{
-                execQuit(command);
-            }catch(Exception e){
-                System.out.println(e.getMessage());
-            }
         }
     }
 
     /**
+     *This method downloads the remote file asked by the user
+     * It first displays the list of files currently in the remote directory and then downloads them
      *
-     * @throws Exception
      */
-    public static void GetSingleFileRemotely() throws Exception  {
-        try {
-            input = new FileInputStream("ftp.properties");
-        } catch (FileNotFoundException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        // load a properties file
-        prop.load(input);
-        System.out.println("Enter file name to download:");
-        String fileToDownload = inp.nextLine();
-        OutputStream os;
+    public static void GetSingleFileRemotely() {
         String pwd = null;
+        String pathToDownload = null, YOrNo = "n";
+        SessionController ctr = new SessionController();
+
+        OutputStream os;
         try {
             pwd = sftp.pwd();
-            System.out.println("\nThe present working directory in the remote server is" +pwd);
-            System.out.println("fileToDownload is"+fileToDownload);
-            SessionController ctr = new SessionController();
+            System.out.println("The present working directory in the remote server is" +pwd);
+            System.out.println("Files/directory in current working directory include");
             ctr.execCommand("ls");
-        } catch (SftpException e) {
-            e.printStackTrace();
-        }
-        /*if (fileToDownload.trim().isEmpty()) {
-            System.out.println("Filename cannot be blank.\n");
-            return;
-        }*/
-        try {
-            //String fdest = "/Users/madusudanan/Downloads/scheduler.txt";
+
+            System.out.println("Do you want to navigate to a different directory? [y/n]");
+            YOrNo = inp.nextLine();
+            while(!YOrNo.toLowerCase().equals("y") && !YOrNo.toLowerCase().equals("n"))
+            {
+                System.out.println("Enter valid option");
+
+                YOrNo = inp.nextLine();
+            }
+
+            while(YOrNo.toLowerCase().equals("y")) {
+                try {
+                    YOrNo = "n";
+                    System.out.println("Enter path to download");
+                    pathToDownload = inp.nextLine();
+                    sftp.cd(pathToDownload);
+                    System.out.println("you are now in path" + sftp.pwd());
+                    System.out.println("Files/directory in current working directory include");
+                    ctr.execCommand("ls");
+                    System.out.println("Do you want to navigate to a different directory? [y/n]");
+                    YOrNo = inp.nextLine();
+                    while(!YOrNo.toLowerCase().equals("y") && !YOrNo.toLowerCase().equals("n"))
+                    {
+                        System.out.println("Enter valid option");
+
+                        YOrNo = inp.nextLine();
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    System.out.println("There was an error in navigating" +e.getMessage());
+                    System.out.println("Please enter a valid path");
+                    System.out.println("Do you want to continue navigating to a different directory? [y/n]");
+                    YOrNo = inp.nextLine();
+
+                    while(!YOrNo.toLowerCase().equals("y") && !YOrNo.toLowerCase().equals("n"))
+                    {
+                        System.out.println("Enter valid option");
+
+                        YOrNo = inp.nextLine();
+                    }
+
+                }
+
+            }
+            System.out.println("Enter file name to download:");
+            String fileToDownload = inp.nextLine();
+            System.out.println("fileToDownload is"+fileToDownload);
+
+            input = new FileInputStream("ftp.properties");
+
+            // load  properties file
+            prop.load(input);
+
+
+
+            if (fileToDownload == null || fileToDownload.equals("")) {
+                System.out.println("Filename cannot be blank.\n");
+                return;
+            }
+
             String fDestDir = prop.getProperty("directorytodownload");
             sftp.get(fileToDownload,fDestDir);
             System.out.println("file successfully downloaded and saved in the path" +fDestDir);
@@ -121,7 +161,11 @@ public class SessionController {
 
         } catch (SftpException e)
         {
-            System.out.println("There was an exception in downloading the file stacktrace:" +e);
+            System.out.println("There was an exception in downloading the file :" +e);
+        }
+        catch (FileNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         }
         catch(Exception e)
         {
@@ -137,6 +181,7 @@ public class SessionController {
             }
         }
     }
+
 
 
     /**
@@ -171,13 +216,13 @@ public class SessionController {
                 return false;
             }
         } catch (SftpException e) {
-            e.printStackTrace();
+            System.out.println("Can not create directory. Either directory already exist or name contains invalid symbol. Please enter correct Directory name and try again ! ");
             return false;
         }
     }
 
     /**
-     * This method handles the change permission commands.
+     * Change Permission
      * @param command
      * @return
      */
@@ -199,12 +244,6 @@ public class SessionController {
         }
     }
 
-    public boolean execQuit(String command){
-        if(command.equals("quit") || command.equals("Quit") ){
-            sftp.quit();
-        }
-        return true;
-    }
     /**
      * This method is closing the session
      */

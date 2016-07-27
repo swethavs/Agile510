@@ -7,12 +7,13 @@ cd Agile510
 git checkout FTPClientAgile
 Now the correct project structure will be ready to execute the project 
 Import the cloned project in IntelliJ or Elipse using pom.xml 
-Go to -> Run -> Edit Configuration  ->click on "+" symbol , add new application name- FTPClientDemo
-Main Class - FTPClientDemo
+Go to -> Run -> Edit Configuration  ->click on "+" symbol , add new application name- FTPConnectDemo
+Main Class - FTPConnectDemo
 Program Arguments -> linux.cs.pdx.edu 22 userID Password
 Choose Proper Working Directory
 Click on Apply
-Do on Run -> Click Run Application
+Pass your arguments using ftp.properties file(set UserID , Password)
+Click on Run -> Click Run Application
 FTP Client gets connected.
 Enter the following commands to carry out various functions-
 ls --> to list directories.

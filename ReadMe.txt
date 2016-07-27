@@ -11,8 +11,8 @@ Click on Apply
 Do on Run -> Click Run Application
 FTP Client gets connected.
 Enter the following commands to carry out various functions-
-ls --> to list directories
-mkdir directory_name --> to make directory on remote server
-rm file_name --> to remove file on remote server
-rmdir directory_name --> toremove directory on remote server
-
+ls --> to list directories.
+mkdir directory_name --> to make directory on remote server.
+rm file_name --> to remove file on remote server.
+rmdir directory_name --> toremove directory on remote server.
+q --> quit connection

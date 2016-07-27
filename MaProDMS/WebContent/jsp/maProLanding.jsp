@@ -35,7 +35,7 @@
 	</div>
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
-			<li><a href="#">Browse Documents</a></li>
+			<li><a href="#" onclick="browseMaProDocument()">Browse Documents</a></li>
 			<li><a href="#" onclick="uploadMaProDocument()">Upload Documents</a></li>
 			<li><a href="#">List Favorites</a></li>
 			<li class="dropdown">
@@ -53,6 +53,9 @@
 		<div class="col-sm-3 col-md-3 pull-right">
 		<form id="fileUploadForm">	 
 					<input id="fileToUpload" name="fileToUpload" type="file"  style="visibility:hidden"/> <br/>
+		 </form>
+		 <form id="fileBrowseForm">	 
+					<input id="fileToBrowse" name="fileToBrowse" type="file"  style="visibility:hidden"/> <br/>
 		 </form>
           <form class="navbar-form" role="search">
             <div class="input-group">

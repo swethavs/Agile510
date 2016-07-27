@@ -1,7 +1,11 @@
 READ ME-
 This Project is used to create FTP inorder to connect to linux.cs.pdx.edu server via proper userid and password.
 In order to use this project -
-Clone the project using command git clone https://github.com/swethavs/Agile510.git
+Clone the project using command-
+git clone https://github.com/swethavs/Agile510.git
+cd Agile510
+git checkout FTPClientAgile
+Now the correct project structure will be ready to execute the project 
 Import the cloned project in IntelliJ or Elipse using pom.xml 
 Go to -> Run -> Edit Configuration  ->click on "+" symbol , add new application name- FTPClientDemo
 Main Class - FTPClientDemo

@@ -68,11 +68,7 @@ public class SessionController {
                 System.out.println("Error while getting the file remotely" +e);
             }
         }else if (command.startsWith("chmod")){
-            try {
                 execchmod(command);
-            }catch(Exception e){
-                System.out.println(e.getMessage());
-            }
         }
     }
 
@@ -228,10 +224,12 @@ public class SessionController {
      */
     public boolean execchmod(String command){
         String[] commandArgs = command.split(" ");
+        String filename =null;
+        int permissionType=0;
         try {
             if (commandArgs.length > 2) {
-                int permissionType = Integer.parseInt(commandArgs[1]);
-                String filename = commandArgs[2];
+                permissionType = Integer.parseInt(commandArgs[1],8);
+               filename = commandArgs[2];
                 sftp.chmod(permissionType,filename);
                 return true;
             } else {
@@ -239,7 +237,12 @@ public class SessionController {
                 return false;
             }
         } catch (SftpException e) {
-            e.printStackTrace();
+            System.out.println("Either the file "+ filename+" does not exist" + " or permissionType "+ permissionType+ " is wrong. \n" +
+                    "Please try again with correct command." );
+            return false;
+        }catch (NumberFormatException e) {
+            System.out.println("Either the file "+ filename+" does not exist" + " or permissionType "+ permissionType+ " is wrong. \n" +
+                    "Please try again with correct command." );
             return false;
         }
     }

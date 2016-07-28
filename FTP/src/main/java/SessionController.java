@@ -353,7 +353,7 @@ public class SessionController {
 
 
     /**
-     *
+     *This method Lists the files/folder inside a directory
      * @return
      */
     public Vector ExecLs() {
@@ -428,6 +428,10 @@ public class SessionController {
         }
     }
 
+    /**
+     * This method renames the file
+     * @param command
+     */
     public void ExecRename(String command) {
         String[] commandArgs = command.split(" ");
         try {
@@ -451,6 +455,11 @@ public class SessionController {
 
     }
 
+    /**
+     * This method checks if the file exists.
+     * @param fileName
+     * @return
+     */
     public boolean CheckFileExist(String fileName) {
         boolean find = true;
         try {

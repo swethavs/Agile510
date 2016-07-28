@@ -85,6 +85,12 @@ public class MaProServiceDelegate {
 		List<GridFSDBFile> gridFSDBFileList = maProMongoData.listUserDocumentsInfo(userId);
 		return gridFSDBFileList;
 	}
+	
+
+	public GridFSDBFile getUserDocumentsInfo(String objectId){
+		GridFSDBFile gridFSDBFileList = maProMongoData.getUserDocumentsInfo(objectId);
+		return gridFSDBFileList;
+	}
 	public String retrieveMaProDocument(){
 		
 		return "success";

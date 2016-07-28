@@ -3,7 +3,9 @@ package com.mapro.persistence.mongo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
+
 import com.mapro.model.MaProCmsDocument;
 import com.mapro.model.MaProCmsMetaData;
 import com.mapro.mongo.utility.MongDBConnectionInstance;
@@ -50,6 +52,15 @@ public class MaProMongoData {
 		GridFS gfsFile=new GridFS(db,"maProFiles");
 		BasicDBObject query = new BasicDBObject("metadata.maProUserName", userId);
 		gridFSDBFileList= gfsFile.find(query);
+		return gridFSDBFileList;
+	}
+	
+	public GridFSDBFile getUserDocumentsInfo(String objectId){
+		GridFSDBFile gridFSDBFileList = new GridFSDBFile();
+		DB db=MongDBConnectionInstance.getMongoConnectionInstance();
+		GridFS gfsFile=new GridFS(db,"maProFiles");
+		BasicDBObject query = new BasicDBObject("_id", new ObjectId(objectId));
+		gridFSDBFileList= gfsFile.findOne(query);
 		return gridFSDBFileList;
 	}
 

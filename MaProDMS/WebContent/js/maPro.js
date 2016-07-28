@@ -59,3 +59,22 @@ function browseMaProDocument(){
 		
 
 }
+
+
+
+function displayFile(objId){
+	alert(objId);
+	var xhr = new XMLHttpRequest();
+
+	xhr.open("POST", "/MaProDMS/getDocument/"+objId, true);
+	xhr.send();
+	xhr.onload = function(e) {
+		if (this.status == 200) {
+			var	respJSON = this.response;
+			if(respJSON == "success"){
+				alert(respJSON.errorMessage);
+			}
+			
+		}
+	};
+}

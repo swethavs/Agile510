@@ -1,16 +1,22 @@
 package com.mapro.controller.rest;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.mapro.model.CmsLoginObject;
 import com.mapro.model.MaProCmsMetaData;
 import com.mapro.mongo.utility.MaProUtility;
@@ -86,6 +92,24 @@ public class MaProController {
 
 	}
 	
-	
+	@RequestMapping(value="/getDocument/{objectId}",method=RequestMethod.POST)
+	public void getOneDocumentContent(HttpServletRequest request, HttpServletResponse response, @PathVariable(value="objectId") String objectId) {
+		System.out.println(objectId + "xas");
+		 GridFSDBFile girdFSDBFileList = maProServiceDelegate.getUserDocumentsInfo(objectId);
+//		 GridFSDBFile fileObj= girdFSDBFileList.get(0);
+		 response.setContentType("application/text");
+		 response.setHeader("Content-Disposition", "attachment; filename=testing.txt");
+		 
+		 OutputStream out= null;
+		 try {
+			out=response.getOutputStream();
+			girdFSDBFileList.writeTo("D:\\textMaPro.txt");
+			girdFSDBFileList.writeTo(out);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 }

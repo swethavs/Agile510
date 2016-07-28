@@ -55,7 +55,7 @@
 					<input id="fileToUpload" name="fileToUpload" type="file"  style="visibility:hidden"/> <br/>
 		 </form>
 		 <form id="fileBrowseForm">	 
-					<input id="fileToBrowse" name="fileToBrowse" type="file"  style="visibility:hidden"/> <br/>
+					<input id="fileToBrowse" name="fileToBrowse" type=""  style="visibility:hidden"/> <br/>
 		 </form>
           <form class="navbar-form" role="search">
             <div class="input-group">
@@ -116,8 +116,8 @@
       <div class="col-xs-12">
         <h2>Document List</h2>
         <c:forEach items="${modelMapLanding.maProDocumentList}" var="element"> 
-  <p><a>${element.fileName}</a></p><br>
-</c:forEach>
+  		<p><a id = "${element.maProObjectId}" onclick="displayFile('${element.maProObjectId}')">${element.fileName}</a></p><br>
+		</c:forEach>
         
         <p class="lead"><button class="btn btn-default">Read More</button></p>
         <p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>

@@ -12,7 +12,7 @@ import java.util.Scanner;
 import java.util.Vector;
 
 
-public class SessionController {
+public class SessionControler {
 
     private Session session;
     private static ChannelSftp sftp;
@@ -97,7 +97,7 @@ public class SessionController {
             pwd = sftp.pwd();
             System.out.println("\nThe present working directory in the remote server is" +pwd);
             System.out.println("fileToDownload is"+fileToDownload);
-            SessionController ctr = new SessionController();
+            SessionControler ctr = new SessionControler();
             ctr.execCommand("ls");
         } catch (SftpException e) {
             e.printStackTrace();

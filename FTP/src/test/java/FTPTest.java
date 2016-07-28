@@ -7,13 +7,13 @@ public class FTPTest {
 
     @Test
     public void showConnectSuccess() {
-        SessionController controller = new SessionController();
+        SessionControler controller = new SessionControler();
         assertThat(controller.setUpConnection(setHost(), setPort(), setUser(), setPass()), equalTo(true));
     }
 
     @Test
     public void showConnectFailure() {
-        SessionController controller = new SessionController();
+        SessionControler controller = new SessionControler();
         assertThat(controller.setUpConnection(setHost(), setPort(), setUser(), "Whatever"), equalTo(false));
     }
 

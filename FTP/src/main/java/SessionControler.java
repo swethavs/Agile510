@@ -52,13 +52,13 @@ public class SessionControler {
      */
     public void execCommand(String command) {
         if (command.equals("ls")) {
-            Vector result = execls();
+            Vector result = execLs();
             Iterator myiterator = result.iterator();
             while (myiterator.hasNext()) {
                 ChannelSftp.LsEntry current = (ChannelSftp.LsEntry)myiterator.next();
                 System.out.println(current.toString());
             }
-        }else if (command.startsWith("mkdir")) {
+        } else if (command.startsWith("mkdir")) {
             execmkdir(command);
         } else if (command.equals("rd")) {
             try{
@@ -67,9 +67,15 @@ public class SessionControler {
             catch(Exception e) {
                 System.out.println("Error while getting the file remotely" +e);
             }
-        }else if (command.startsWith("chmod")){
+        } else if (command.startsWith("chmod")){
             try {
                 execchmod(command);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        } else if (command.startsWith("mv")) {
+            try {
+                execRename(command);
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }
@@ -137,7 +143,7 @@ public class SessionControler {
      *
      * @return
      */
-    public Vector execls() {
+    public Vector execLs() {
         Vector vector = null;
         try {
             vector = sftp.ls(".");
@@ -194,6 +200,40 @@ public class SessionControler {
      */
     public void closeSession() {
         session.disconnect();
+    }
+
+    public void execRename(String command) {
+        String[] commandArgs = command.split(" ");
+        try {
+            if (commandArgs.length == 3) {
+                if (!checkFileExist(commandArgs[1]))
+                    System.out.println("Old file does not exist.");
+                else if (checkFileExist(commandArgs[2]))
+                    System.out.println("New file name exists already.");
+                else {
+                    sftp.rename(commandArgs[1], commandArgs[2]);
+                    System.out.println("Change " + commandArgs[1] + " to " + commandArgs[2] + " successfully.");
+                }
+            } else {
+                System.out.println("Please provide the old name and the new name.");
+            }
+        } catch (SftpException e) {
+
+            System.out.println(e.getMessage());
+
+        }
+
+    }
+
+    public boolean checkFileExist(String fileName) {
+        boolean find = true;
+        try {
+            sftp.ls(fileName);
+        } catch (SftpException e) {
+            find = false;
+        }
+        return find;
+
     }
 
 

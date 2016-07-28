@@ -62,7 +62,8 @@ public class SessionController {
             execmkdir(command);
         } else if (command.equals("rd")) {
             try{
-                GetSingleFileRemotely();
+                //GetSingleFileRemotely();
+                GetFilesRemotely();
             }
             catch(Exception e) {
                 System.out.println("Error while getting the file remotely" +e);
@@ -73,11 +74,11 @@ public class SessionController {
     }
 
     /**
-     *This method downloads the remote file asked by the user
+     *This method downloads the remote files asked by the user
      * It first displays the list of files currently in the remote directory and then downloads them
      *
      */
-    public static void GetSingleFileRemotely() {
+    public static void GetFilesRemotely() {
         String pwd = null;
         String pathToDownload = null, YOrNo = "n";
         SessionController ctr = new SessionController();
@@ -134,8 +135,13 @@ public class SessionController {
                 }
 
             }
-            System.out.println("Enter file name to download:");
+            System.out.println("Enter file/files to download:");
             String fileToDownload = inp.nextLine();
+            String filenames[]=null;
+            if(fileToDownload.contains(" "));
+            {
+            filenames=fileToDownload.split(" ");
+            }
             System.out.println("fileToDownload is"+fileToDownload);
 
             input = new FileInputStream("ftp.properties");
@@ -149,11 +155,22 @@ public class SessionController {
                 System.out.println("Filename cannot be blank.\n");
                 return;
             }
+            boolean check=false;
+            String fDestDir=null;
+            for(int i=0;i<filenames.length;i++) {
+                 fDestDir = prop.getProperty("directorytodownload");
+                sftp.get(filenames[i], fDestDir);
+                check=true;
+            }
+            if(check)
+            {
+                System.out.println("files successfully downloaded and saved in the path" +" "+ fDestDir);
 
-            String fDestDir = prop.getProperty("directorytodownload");
-            sftp.get(fileToDownload,fDestDir);
-            System.out.println("file successfully downloaded and saved in the path" +fDestDir);
+            }
+            else {
+                System.out.println("files cannot be downloaded,error while downloading");
 
+            }
 
         } catch (SftpException e)
         {
@@ -177,8 +194,6 @@ public class SessionController {
             }
         }
     }
-
-
 
     /**
      *

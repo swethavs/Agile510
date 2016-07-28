@@ -8,13 +8,13 @@ public class FTPTest {
     @Test
     public void showConnectSuccess() {
         SessionController controller = new SessionController();
-        assertThat(controller.setUpConnection(setHost(), setPort(), setUser(), setPass()), equalTo(true));
+        assertThat(controller.SetUpConnection(setHost(), setPort(), setUser(), setPass()), equalTo(true));
     }
 
     @Test
     public void showConnectFailure() {
         SessionController controller = new SessionController();
-        assertThat(controller.setUpConnection(setHost(), setPort(), setUser(), "Whatever"), equalTo(false));
+        assertThat(controller.SetUpConnection(setHost(), setPort(), setUser(), "Whatever"), equalTo(false));
     }
 
     public String setUser() {

@@ -29,13 +29,13 @@ public class FTPConnectDemo {
             prop.load(input);
             SessionController controller = new SessionController();
             //sftp.ls("test3")
-            if (!controller.setUpConnection(prop.getProperty("remoteservername"), Integer.parseInt(prop.getProperty("port"))
+            if (!controller.SetUpConnection(prop.getProperty("remoteservername"), Integer.parseInt(prop.getProperty("port"))
                     , prop.getProperty("uname"), prop.getProperty("password"))) {
                 System.out.println("Connection fails");
                 System.exit(1);
             }
             userIO(controller);
-            controller.closeSession();
+            controller.CloseSession();
         } catch (FileNotFoundException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -58,7 +58,7 @@ public class FTPConnectDemo {
         String command = scanner.next();
         while (!command.equalsIgnoreCase("q")) {
 
-            controller.execCommand(command);
+            controller.ExecCommand(command);
             System.out.println("Please enter your command:");
             command = scanner.next();
 

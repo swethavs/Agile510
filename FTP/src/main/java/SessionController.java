@@ -28,7 +28,7 @@ public class SessionController {
      * @param password
      * @return
      */
-    public boolean setUpConnection(String host, int port, String user, String password) {
+    public boolean SetUpConnection(String host, int port, String user, String password) {
         JSch jsch = new JSch();
         try {
             Session session = jsch.getSession(user, host, port);
@@ -50,26 +50,26 @@ public class SessionController {
      * This method is executing the commands asked by user.
      * @param command
      */
-    public void execCommand(String command) {
+    public void ExecCommand(String command) {
         if (command.equals("ls")) {
-            Vector result = execls();
+            Vector result = ExecLs();
             Iterator myiterator = result.iterator();
             while (myiterator.hasNext()) {
                 ChannelSftp.LsEntry current = (ChannelSftp.LsEntry)myiterator.next();
                 System.out.println(current.toString());
             }
         }else if (command.startsWith("mkdir")) {
-            execmkdir(command);
+            ExecMkdir(command);
         } else if (command.equals("rd")) {
             try{
                 //GetSingleFileRemotely();
-                GetFilesRemotely();
+                ExecGetFilesRemotely();
             }
             catch(Exception e) {
                 System.out.println("Error while getting the file remotely" +e);
             }
         }else if (command.startsWith("chmod")){
-                execchmod(command);
+                ExecChmod(command);
         } else if(command.contains("rm") || command.contains("rmdir")){
             //if(command.size()<2) continue;
             String path=(String)command.substring(command.indexOf(" ")+1); //.elementAt(1);
@@ -90,7 +90,7 @@ public class SessionController {
             }
         } else if (command.startsWith("mv")) {
             try {
-                execRename(command);
+                ExecRename(command);
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }
@@ -99,10 +99,11 @@ public class SessionController {
 
     /**
      *This method downloads the remote files asked by the user
-     * It first displays the list of files currently in the remote directory and then downloads them
+     * It first displays the list of file
+     * s currently in the remote directory and then downloads them
      *
      */
-    public static void GetFilesRemotely() {
+    public static void ExecGetFilesRemotely() {
         String pwd = null;
         String pathToDownload = null, YOrNo = "n";
         SessionController ctr = new SessionController();
@@ -112,7 +113,7 @@ public class SessionController {
             pwd = sftp.pwd();
             System.out.println("The present working directory in the remote server is" +pwd);
             System.out.println("Files/directory in current working directory include");
-            ctr.execCommand("ls");
+            ctr.ExecCommand("ls");
 
             System.out.println("Do you want to navigate to a different directory? [y/n]");
             YOrNo = inp.nextLine();
@@ -131,7 +132,7 @@ public class SessionController {
                     sftp.cd(pathToDownload);
                     System.out.println("you are now in path" + sftp.pwd());
                     System.out.println("Files/directory in current working directory include");
-                    ctr.execCommand("ls");
+                    ctr.ExecCommand("ls");
                     System.out.println("Do you want to navigate to a different directory? [y/n]");
                     YOrNo = inp.nextLine();
                     while(!YOrNo.toLowerCase().equals("y") && !YOrNo.toLowerCase().equals("n"))
@@ -223,7 +224,7 @@ public class SessionController {
      *
      * @return
      */
-    public Vector execls() {
+    public Vector ExecLs() {
         Vector vector = null;
         try {
             vector = sftp.ls(".");
@@ -240,7 +241,7 @@ public class SessionController {
      * @param command
      * @return
      */
-    public boolean execmkdir(String command) {
+    public boolean ExecMkdir(String command) {
         String[] commandArgs = command.split(" ");
         try {
             if (commandArgs.length > 1) {
@@ -261,7 +262,7 @@ public class SessionController {
      * @param command
      * @return
      */
-    public boolean execchmod(String command){
+    public boolean ExecChmod(String command){
         String[] commandArgs = command.split(" ");
         String filename =null;
         int permissionType=0;
@@ -289,17 +290,17 @@ public class SessionController {
     /**
      * This method is closing the session
      */
-    public void closeSession() {
+    public void CloseSession() {
         session.disconnect();
     }
 
-    public void execRename(String command) {
+    public void ExecRename(String command) {
         String[] commandArgs = command.split(" ");
         try {
             if (commandArgs.length == 3) {
-                if (!checkFileExist(commandArgs[1]))
+                if (!CheckFileExist(commandArgs[1]))
                     System.out.println("Old file does not exist.");
-                else if (checkFileExist(commandArgs[2]))
+                else if (CheckFileExist(commandArgs[2]))
                     System.out.println("New file name exists already.");
                 else {
                     sftp.rename(commandArgs[1], commandArgs[2]);
@@ -316,7 +317,7 @@ public class SessionController {
 
     }
 
-    public boolean checkFileExist(String fileName) {
+    public boolean CheckFileExist(String fileName) {
         boolean find = true;
         try {
             sftp.ls(fileName);

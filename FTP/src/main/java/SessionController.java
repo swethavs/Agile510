@@ -70,6 +70,24 @@ public class SessionController {
             }
         }else if (command.startsWith("chmod")){
                 execchmod(command);
+        } else if(command.contains("rm") || command.contains("rmdir")){
+            //if(command.size()<2) continue;
+            String path=(String)command.substring(command.indexOf(" ")+1); //.elementAt(1);
+            String commandExec=(String)command.substring(0,command.indexOf(" "));
+            try{
+                if(commandExec.equals("rm"))
+                {
+                   sftp.rm(path);
+                }
+                else if(commandExec.equals("rmdir")) {
+                    sftp.rmdir(path);
+                }
+
+                command = " ";
+            }
+            catch(SftpException e){
+                System.out.println(e.toString());
+            }
         }
     }
 

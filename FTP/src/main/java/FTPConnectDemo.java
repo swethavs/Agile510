@@ -28,6 +28,7 @@ public class FTPConnectDemo {
             // load a properties file
             prop.load(input);
             SessionController controller = new SessionController();
+            //sftp.ls("test3")
             if (!controller.setUpConnection(prop.getProperty("remoteservername"), Integer.parseInt(prop.getProperty("port"))
                     , prop.getProperty("uname"), prop.getProperty("password"))) {
                 System.out.println("Connection fails");

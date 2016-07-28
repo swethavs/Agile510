@@ -320,6 +320,7 @@ public class SessionController {
         boolean find = true;
         try {
             sftp.ls(fileName);
+            System.out.println("exist");
         } catch (SftpException e) {
             find = false;
         }

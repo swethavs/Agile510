@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class FTPTest {
 
-    @Test
+  /*  @Test
     public void showConnectSuccess() {
         SessionController controller = new SessionController();
         assertThat(controller.SetUpConnection(setHost(), setPort(), setUser(), setPass()), equalTo(true));
@@ -32,5 +32,5 @@ public class FTPTest {
     public int setPort() {
         return 22;
     }
-
+*/
 }

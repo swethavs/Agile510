@@ -94,6 +94,12 @@ public class SessionController {
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }
+        }else if (command.equals("put")) {
+            try {
+               ExecPutFilesRemotely();
+            } catch (Exception e) {
+                System.out.println("Error while getting the file remotely" + e);
+            }
         }
     }
 
@@ -219,6 +225,132 @@ public class SessionController {
             }
         }
     }
+
+
+    /**
+     *This method uploads the remote files asked by the user
+     * It first displays the list of file
+     * s currently in the remote directory and then uploads them
+     *
+     */
+    public static void ExecPutFilesRemotely() {
+        String pwd = null;
+        String pathToUpload = null, YOrNo = "n";
+        SessionController ctr = new SessionController();
+        try {
+            pwd = sftp.pwd();
+            System.out.println("Please place the file to be uploaded in project folder location");
+            System.out.println("The present working directory in the remote server is" +pwd);
+            System.out.println("Files/directory in current working directory include");
+            ctr.ExecCommand("ls");
+            System.out.println("Please place the file to be uploaded in project folder location");
+            System.out.println("Do you want to navigate to a different directory? [y/n]");
+            YOrNo = inp.nextLine();
+            while(!YOrNo.toLowerCase().equals("y") && !YOrNo.toLowerCase().equals("n"))
+            {
+                System.out.println("Enter valid option");
+
+                YOrNo = inp.nextLine();
+            }
+
+            while(YOrNo.toLowerCase().equals("y")) {
+                try {
+                    YOrNo = "n";
+                    System.out.println("Enter path to upload");
+                    pathToUpload = inp.nextLine();
+                    sftp.cd(pathToUpload);
+                    System.out.println("you are now in path" + sftp.pwd());
+                    System.out.println("Files/directory in current working directory include");
+                    ctr.ExecCommand("ls");
+                    System.out.println("Do you want to navigate to a different directory? [y/n]");
+                    YOrNo = inp.nextLine();
+                    while(!YOrNo.toLowerCase().equals("y") && !YOrNo.toLowerCase().equals("n"))
+                    {
+                        System.out.println("Enter valid option");
+
+                        YOrNo = inp.nextLine();
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    System.out.println("There was an error in navigating" +e.getMessage());
+                    System.out.println("Please enter a valid path");
+                    System.out.println("Do you want to continue navigating to a different directory? [y/n]");
+                    YOrNo = inp.nextLine();
+
+                    while(!YOrNo.toLowerCase().equals("y") && !YOrNo.toLowerCase().equals("n"))
+                    {
+                        System.out.println("Enter valid option");
+
+                        YOrNo = inp.nextLine();
+                    }
+
+                }
+
+            }
+            System.out.println("Enter file/files to upload:");
+            String fileToUpload = inp.nextLine();
+            String filenames[]=null;
+            if(fileToUpload.contains(" "));
+            {
+                filenames=fileToUpload.split(" ");
+            }
+            System.out.println("fileToUpload is"+fileToUpload);
+
+            input = new FileInputStream("ftp.properties");
+
+            // load  properties file
+            prop.load(input);
+
+
+
+            if (fileToUpload == null || fileToUpload.equals("")) {
+                System.out.println("Filename cannot be blank.\n");
+                return;
+            }
+            boolean check=false;
+            String fDestDir=null;
+            for(int i=0;i<filenames.length;i++) {
+                sftp.put(filenames[i]);
+                check=true;
+            }
+            if(check)
+            {
+                System.out.println("files successfully uploaded and saved in the path");
+
+            }
+            else {
+                System.out.println("files cannot be uploaded,error while uploading");
+
+            }
+
+        } catch (SftpException e)
+        {
+            System.out.println("There was an exception in uploading the file :" +e);
+        }
+        catch (FileNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        catch(Exception e)
+        {
+            System.out.println("\nThere was an error in uploading the file" +e);
+        }
+        finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+
+
 
     /**
      *

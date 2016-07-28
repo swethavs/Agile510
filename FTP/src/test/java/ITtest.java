@@ -9,6 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class ITtest {
+    /*
     private static Properties prop = new Properties();
     private static InputStream input = null;
     SessionController controller = null;
@@ -44,5 +45,5 @@ public class ITtest {
     }
 
 
-
+*/
 }

@@ -27,7 +27,7 @@ public class FTPConnectDemo {
             input = new FileInputStream("ftp.properties");
             // load a properties file
             prop.load(input);
-            SessionControler controller = new SessionControler();
+            SessionController controller = new SessionController();
             if (!controller.setUpConnection(prop.getProperty("remoteservername"), Integer.parseInt(prop.getProperty("port"))
                     , prop.getProperty("uname"), prop.getProperty("password"))) {
                 System.out.println("Connection fails");
@@ -52,7 +52,7 @@ public class FTPConnectDemo {
      * and perform the operation specific to command.
      * @param controller
      */
-    public static void userIO(SessionControler controller) {
+    public static void userIO(SessionController controller) {
         System.out.println("Please enter your command:");
         String command = scanner.next();
         while (!command.equalsIgnoreCase("q")) {

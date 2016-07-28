@@ -88,6 +88,12 @@ public class SessionController {
             catch(SftpException e){
                 System.out.println(e.toString());
             }
+        } else if (command.startsWith("mv")) {
+            try {
+                execRename(command);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -287,6 +293,39 @@ public class SessionController {
         session.disconnect();
     }
 
+    public void execRename(String command) {
+        String[] commandArgs = command.split(" ");
+        try {
+            if (commandArgs.length == 3) {
+                if (!checkFileExist(commandArgs[1]))
+                    System.out.println("Old file does not exist.");
+                else if (checkFileExist(commandArgs[2]))
+                    System.out.println("New file name exists already.");
+                else {
+                    sftp.rename(commandArgs[1], commandArgs[2]);
+                    System.out.println("Change " + commandArgs[1] + " to " + commandArgs[2] + " successfully.");
+                }
+            } else {
+                System.out.println("Please provide the old name and the new name.");
+            }
+        } catch (SftpException e) {
+
+            System.out.println(e.getMessage());
+
+        }
+
+    }
+
+    public boolean checkFileExist(String fileName) {
+        boolean find = true;
+        try {
+            sftp.ls(fileName);
+        } catch (SftpException e) {
+            find = false;
+        }
+        return find;
+
+    }
 
 
 }

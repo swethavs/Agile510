@@ -291,7 +291,9 @@ public class SessionController {
      * This method is closing the session
      */
     public void CloseSession() {
-        session.disconnect();
+        if (session != null) {
+            session.disconnect();
+        }
     }
 
     public void ExecRename(String command) {
@@ -324,6 +326,7 @@ public class SessionController {
             System.out.println("exist");
         } catch (SftpException e) {
             find = false;
+            //e.printStackTrace();
         }
         return find;
 

@@ -12,7 +12,7 @@ Main Class - FTPConnectDemo
 Program Arguments -> linux.cs.pdx.edu 22 userID Password
 Choose Proper Working Directory
 Click on Apply
-Pass your arguments using ftp.properties file(set UserID , Password)
+Pass your arguments using ftp.properties file(set UserID , Password) or command line 
 Click on Run -> Click Run Application
 FTP Client gets connected.
 Enter the following commands to carry out various functions-
@@ -20,4 +20,8 @@ ls --> to list directories.
 mkdir directory_name --> to make directory on remote server.
 rm file_name --> to remove file on remote server.
 rmdir directory_name --> toremove directory on remote server.
+put--> to put file to the remote server from local server.
+rd-->to get files from the remote server to the local.
+chmod-->to change the permissions of thw file
+mv-->to rename a file
 q --> quit connection

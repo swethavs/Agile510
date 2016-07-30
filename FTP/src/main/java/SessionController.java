@@ -28,10 +28,18 @@ public class SessionController {
      * @param password
      * @return
      */
-    public boolean SetUpConnection(String host, int port, String user, String password) {
+    /**
+     * This method establishes the connection to FTP server
+     * @param host
+     * @param port
+     * @param user
+     * @param password
+     * @return
+     */
+    public boolean login(String host, int port, String user, String password) {
         JSch jsch = new JSch();
         try {
-            Session session = jsch.getSession(user, host, port);
+            session = jsch.getSession(user, host, port);
             session.setConfig("StrictHostKeyChecking", "no");
             session.setPassword(password);
             session.connect(3000);
@@ -51,54 +59,59 @@ public class SessionController {
      * @param command
      */
     public void ExecCommand(String command) {
-        if (command.equals("ls")) {
-            Vector result = ExecLs();
-            Iterator myiterator = result.iterator();
-            while (myiterator.hasNext()) {
-                ChannelSftp.LsEntry current = (ChannelSftp.LsEntry)myiterator.next();
-                System.out.println(current.toString());
-            }
-        }else if (command.startsWith("mkdir")) {
-            ExecMkdir(command);
-        } else if (command.equals("rd")) {
-            try{
-                //GetSingleFileRemotely();
-                ExecGetFilesRemotely();
-            }
-            catch(Exception e) {
-                System.out.println("Error while getting the file remotely" +e);
-            }
-        }else if (command.startsWith("chmod")){
-                ExecChmod(command);
-        } else if(command.contains("rm") || command.contains("rmdir")){
-            //if(command.size()<2) continue;
-            String path=(String)command.substring(command.indexOf(" ")+1); //.elementAt(1);
-            String commandExec=(String)command.substring(0,command.indexOf(" "));
-            try{
-                if(commandExec.equals("rm"))
-                {
-                   sftp.rm(path);
-                }
-                else if(commandExec.equals("rmdir")) {
-                    sftp.rmdir(path);
-                }
+        if (session.isConnected() && FTPConnectDemo.isLoggedIn) {
 
-                command = " ";
-            }
-            catch(SftpException e){
-                System.out.println(e.toString());
-            }
-        } else if (command.startsWith("mv")) {
-            try {
-                ExecRename(command);
-            }catch(Exception e){
-                System.out.println(e.getMessage());
-            }
-        }else if (command.equals("put")) {
-            try {
-               ExecPutFilesRemotely();
-            } catch (Exception e) {
-                System.out.println("Error while getting the file remotely" + e);
+            if (command.equals("ls")) {
+                Vector result = ExecLs();
+                Iterator myiterator = result.iterator();
+                while (myiterator.hasNext()) {
+                    ChannelSftp.LsEntry current = (ChannelSftp.LsEntry) myiterator.next();
+                    System.out.println(current.toString());
+                }
+            } else if (command.startsWith("mkdir")) {
+                ExecMkdir(command);
+            } else if (command.equals("rd")) {
+                try {
+                    //GetSingleFileRemotely();
+                    ExecGetFilesRemotely();
+                } catch (Exception e) {
+                    System.out.println("Error while getting the file remotely" + e);
+                }
+            } else if (command.startsWith("chmod")) {
+                ExecChmod(command);
+            } else if (command.contains("rm") || command.contains("rmdir")) {
+                //if(command.size()<2) continue;
+                String path = (String) command.substring(command.indexOf(" ") + 1); //.elementAt(1);
+                String commandExec = (String) command.substring(0, command.indexOf(" "));
+                try {
+                    if (commandExec.equals("rm")) {
+                        sftp.rm(path);
+                    } else if (commandExec.equals("rmdir")) {
+                        sftp.rmdir(path);
+                    }
+
+                    command = " ";
+                } catch (SftpException e) {
+                    System.out.println(e.toString());
+                }
+            } else if (command.startsWith("mv")) {
+                try {
+                    ExecRename(command);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            } else if (command.equals("put")) {
+                try {
+                    ExecPutFilesRemotely();
+                } catch (Exception e) {
+                    System.out.println("Error while getting the file remotely" + e);
+                }
+            } else if (command.equals("logout")) {
+                try {
+                    Logout();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         }
     }
@@ -109,17 +122,21 @@ public class SessionController {
      * s currently in the remote directory and then downloads them
      *
      */
+    /**
+     *This method downloads the remote file asked by the user
+     * It first displays the list of files currently in the remote directory and then downloads them
+     *
+     */
     public static void ExecGetFilesRemotely() {
         String pwd = null;
         String pathToDownload = null, YOrNo = "n";
-        SessionController ctr = new SessionController();
 
         OutputStream os;
         try {
             pwd = sftp.pwd();
             System.out.println("The present working directory in the remote server is" +pwd);
             System.out.println("Files/directory in current working directory include");
-            ctr.ExecCommand("ls");
+            FTPConnectDemo.controller.ExecCommand("ls");
 
             System.out.println("Do you want to navigate to a different directory? [y/n]");
             YOrNo = inp.nextLine();
@@ -138,7 +155,7 @@ public class SessionController {
                     sftp.cd(pathToDownload);
                     System.out.println("you are now in path" + sftp.pwd());
                     System.out.println("Files/directory in current working directory include");
-                    ctr.ExecCommand("ls");
+                    FTPConnectDemo.controller.ExecCommand("ls");
                     System.out.println("Do you want to navigate to a different directory? [y/n]");
                     YOrNo = inp.nextLine();
                     while(!YOrNo.toLowerCase().equals("y") && !YOrNo.toLowerCase().equals("n"))
@@ -151,8 +168,7 @@ public class SessionController {
                 }
                 catch (Exception e)
                 {
-                    System.out.println("There was an error in navigating" +e.getMessage());
-                    System.out.println("Please enter a valid path");
+                    System.out.println(e.getMessage());
                     System.out.println("Do you want to continue navigating to a different directory? [y/n]");
                     YOrNo = inp.nextLine();
 
@@ -166,13 +182,8 @@ public class SessionController {
                 }
 
             }
-            System.out.println("Enter file/files to download:");
+            System.out.println("Enter file name to download:");
             String fileToDownload = inp.nextLine();
-            String filenames[]=null;
-            if(fileToDownload.contains(" "));
-            {
-            filenames=fileToDownload.split(" ");
-            }
             System.out.println("fileToDownload is"+fileToDownload);
 
             input = new FileInputStream("ftp.properties");
@@ -186,22 +197,11 @@ public class SessionController {
                 System.out.println("Filename cannot be blank.\n");
                 return;
             }
-            boolean check=false;
-            String fDestDir=null;
-            for(int i=0;i<filenames.length;i++) {
-                 fDestDir = prop.getProperty("directorytodownload");
-                sftp.get(filenames[i], fDestDir);
-                check=true;
-            }
-            if(check)
-            {
-                System.out.println("files successfully downloaded and saved in the path" +" "+ fDestDir);
 
-            }
-            else {
-                System.out.println("files cannot be downloaded,error while downloading");
+            String fDestDir = prop.getProperty("directorytodownload");
+            sftp.get(fileToDownload,fDestDir);
+            System.out.println("file successfully downloaded and saved in the path" +fDestDir);
 
-            }
 
         } catch (SftpException e)
         {
@@ -225,6 +225,7 @@ public class SessionController {
             }
         }
     }
+
 
 
     /**
@@ -471,6 +472,16 @@ public class SessionController {
         }
         return find;
 
+    }
+
+    /*
+    * This method logout
+    * */
+    private void Logout() {
+        sftp.disconnect();
+        System.out.println("You have been logged out!");
+        FTPConnectDemo.isLoggedIn = false;
+        CloseSession();
     }
 
 

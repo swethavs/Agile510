@@ -16,6 +16,11 @@ public class FTPConnectDemo {
     private static Scanner scanner = new Scanner(System.in).useDelimiter("\n");
     private static Properties prop = new Properties();
     private static InputStream input = null;
+    private static String uname = null;
+    private static String password = null;
+
+    public static boolean isLoggedIn = false;
+    public static SessionController controller = new SessionController();
 
 
     /**
@@ -27,12 +32,8 @@ public class FTPConnectDemo {
             input = new FileInputStream("ftp.properties");
             // load a properties file
             prop.load(input);
-            SessionController controller = new SessionController();
-            if (!controller.SetUpConnection(prop.getProperty("remoteservername"), Integer.parseInt(prop.getProperty("port"))
-                    , prop.getProperty("uname"), prop.getProperty("password"))) {
-                System.out.println("Connection fails");
-                System.exit(1);
-            }
+            createsession(controller);
+
             userIO(controller);
             controller.CloseSession();
         } catch (FileNotFoundException e1) {
@@ -46,6 +47,18 @@ public class FTPConnectDemo {
 
     }
 
+    private static void createsession(SessionController controller) {
+        System.out.println("Enter the user name");
+        uname = scanner.next();
+        System.out.println("Enter the password");
+        password = scanner.next();
+        isLoggedIn = controller.login(prop.getProperty("remoteservername"), Integer.parseInt(prop.getProperty("port"))
+                , uname, password);
+        if (!isLoggedIn) {
+            System.out.println("Connection fails");
+            System.exit(1);
+        }
+    }
 
     /**
      *This method asks the user to provide the desired command
@@ -56,10 +69,17 @@ public class FTPConnectDemo {
         System.out.println("Please enter your command:");
         String command = scanner.next();
         while (!command.equalsIgnoreCase("q")) {
+            if (isLoggedIn){
 
             controller.ExecCommand(command);
             System.out.println("Please enter your command:");
             command = scanner.next();
+            }
+            else{
+                System.out.println("You are not logged in! Please login before proceeding");
+                createsession(controller);
+
+            }
 
         }
     }

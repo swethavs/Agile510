@@ -28,6 +28,7 @@ public class FTPConnectDemo {
      * @param args
      */
     public static void main(String[] args) {
+        isLoggedIn = false;
         try {
             input = new FileInputStream("ftp.properties");
             // load a properties file
@@ -68,6 +69,8 @@ public class FTPConnectDemo {
                 "put: Put file on remote server\n" +
                 "logout: log out\n");
     }
+
+
 
     /**
      *This method asks the user to provide the desired command

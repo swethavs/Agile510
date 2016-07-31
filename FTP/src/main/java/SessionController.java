@@ -1,3 +1,4 @@
+import com.google.common.annotations.VisibleForTesting;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
@@ -47,11 +48,17 @@ public class SessionController {
             sftp = (ChannelSftp) channel;
             sftp.connect(3000);
         } catch (JSchException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         }
 
         return true;
+    }
+
+    @VisibleForTesting
+    public boolean SetUpConnection(String remoteservername, String port, String uname, String password) {
+        return login(remoteservername, Integer.parseInt(port)
+                , uname, password);
     }
 
     /**
@@ -459,7 +466,8 @@ public class SessionController {
     /**
      * This method checks if the file exists.
      * @param fileName
-     * @return
+     * @return true if file exist
+     *
      */
     public boolean CheckFileExist(String fileName) {
         boolean find = true;

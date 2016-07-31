@@ -9,11 +9,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class ITtest {
-    /*
+
     private static Properties prop = new Properties();
     private static InputStream input = null;
     SessionController controller = null;
     String out;
+    ByteArrayOutputStream newOut;
 
     @Before
     public void setUpConnect() {
@@ -21,8 +22,9 @@ public class ITtest {
         try {
             input = new FileInputStream("ftp.properties");
             prop.load(input);
-            controller.SetUpConnection(prop.getProperty("remoteservername"), Integer.parseInt(prop.getProperty("port"))
-                    , prop.getProperty("uname"), prop.getProperty("password"));
+            String uname = "pardeexi";
+            String password = "";
+            controller.SetUpConnection(prop.getProperty("remoteservername"), prop.getProperty("port"), uname, password);
         } catch (FileNotFoundException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -31,19 +33,31 @@ public class ITtest {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        ByteArrayOutputStream newOut = new ByteArrayOutputStream();
 
+        newOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(newOut));
-        out = newOut.toString();
+        //out = newOut.toString();
+
 
     }
 
     @Test
     public void showWorkFlow() {
+        FTPConnectDemo.isLoggedIn = true;
+        controller.ExecCommand("mkdir directoryfortest");
+        assertThat(controller.CheckFileExist("directoryfortest"), equalTo(true));
         controller.ExecCommand("ls");
+        controller.ExecCommand("mv directoryfortest directoryfortest2");
+        assertThat(controller.CheckFileExist("directoryfortest2"), equalTo(true));
+        controller.ExecCommand("rmdir directoryfortest2");
+        assertThat(controller.CheckFileExist("directoryfortest2"), equalTo(false));
+        controller.ExecCommand("logout");
+        out = newOut.toString();
         assertThat(out, containsString("test3"));
+        assertThat(out, containsString("You have been logged out!"));
+
     }
 
 
-*/
+
 }

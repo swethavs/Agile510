@@ -20,4 +20,6 @@ ls --> to list directories.
 mkdir directory_name --> to make directory on remote server.
 rm file_name --> to remove file on remote server.
 rmdir directory_name --> toremove directory on remote server.
-q --> quit connection
+logout-logout from the currebt session
+q --> quit the program
+

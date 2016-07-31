@@ -25,7 +25,7 @@ public class MaProMongoData {
 	   try {
 			DB db=MongDBConnectionInstance.getMongoConnectionInstance();
 			GridFS gfsFile=new GridFS(db,"maProFiles");
-			GridFSInputFile firstInputFile=gfsFile.createFile(maProCmsDocument.getFileContent());
+			GridFSInputFile firstInputFile=gfsFile.createFile( maProCmsDocument.getMaProCmsMetaData().getFileByteArray());
 			firstInputFile.setFilename(maProCmsDocument.getMaProCmsMetaData().getFileName());
 			DBObject maProFileMetaData = new BasicDBObject() ;
 			

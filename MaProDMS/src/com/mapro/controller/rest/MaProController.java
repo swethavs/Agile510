@@ -97,13 +97,13 @@ public class MaProController {
 		System.out.println(objectId + "xas");
 		 GridFSDBFile girdFSDBFileList = maProServiceDelegate.getUserDocumentsInfo(objectId);
 //		 GridFSDBFile fileObj= girdFSDBFileList.get(0);
-		 response.setContentType("application/text");
-		 response.setHeader("Content-Disposition", "attachment; filename=testing.txt");
+		 response.setContentType("application/pdf");
+		 response.setHeader("Content-Disposition", "attachment; filename=testing.pdf");
 		 
 		 OutputStream out= null;
 		 try {
 			out=response.getOutputStream();
-			girdFSDBFileList.writeTo("D:\\textMaPro.txt");
+			girdFSDBFileList.writeTo("D:\\textMaProLatest.pdf");
 			girdFSDBFileList.writeTo(out);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -8,7 +8,14 @@ public class MaProCmsMetaData {
 	private String fileName;
 	private String maProAppName;
 	private String fileType;
+	private byte[] fileByteArray;
 	
+	public byte[] getFileByteArray() {
+		return fileByteArray;
+	}
+	public void setFileByteArray(byte[] fileByteArray) {
+		this.fileByteArray = fileByteArray;
+	}
 	public String getMaProUserName() {
 		return maProUserName;
 	}

@@ -52,7 +52,7 @@ public class MaProServiceDelegate {
 					InputStream content = item.getInputStream();
 
 					byte[] bytesArrayWAR275 = IOUtils.toByteArray(content);
-					bytesArrayWAR275 =   org.apache.commons.codec.binary.Base64.encodeBase64(bytesArrayWAR275);
+				//	bytesArrayWAR275 =   org.apache.commons.codec.binary.Base64.encodeBase64(bytesArrayWAR275);
 				
 					MaProCmsMetaData maProCmsMetaData = new MaProCmsMetaData();
 					MaProCmsDocument maProCmsDocument = new MaProCmsDocument();
@@ -63,6 +63,7 @@ public class MaProServiceDelegate {
 					maProCmsMetaData.setMaProAppName("MaPro");
 					maProCmsMetaData.setMaProAppRole("maProAdmin");
 					maProCmsMetaData.setMaProUserName("joshivi");
+					maProCmsMetaData.setFileByteArray(bytesArrayWAR275);
 					
 					maProCmsDocument.setFileContent(content);
 					maProCmsDocument.setMaProCmsMetaData(maProCmsMetaData);

@@ -32,6 +32,7 @@ public class FTPConnectDemo {
             input = new FileInputStream("ftp.properties");
             // load a properties file
             prop.load(input);
+            System.out.println("This program provides remote FTP service for CAT PSU");
             createsession(controller);
 
             userIO(controller);
@@ -48,9 +49,9 @@ public class FTPConnectDemo {
     }
 
     private static void createsession(SessionController controller) {
-        System.out.println("Enter the user name");
+        System.out.println("Enter the user name: ");
         uname = scanner.next();
-        System.out.println("Enter the password");
+        System.out.println("Enter the password: ");
         password = scanner.next();
         isLoggedIn = controller.login(prop.getProperty("remoteservername"), Integer.parseInt(prop.getProperty("port"))
                 , uname, password);
@@ -58,6 +59,14 @@ public class FTPConnectDemo {
             System.out.println("Connection fails");
             System.exit(1);
         }
+        System.out.println("Available commands: \nls: List all file and directories\n" +
+                "mkdir: Create directory on remote server\n" +
+                "rd: Get file from remote server\n" +
+                "chmod: Change permissions on remote server\n" +
+                "rm: Remove file or directory on remote server\n" +
+                "mv: Rename file or directory on remote server\n" +
+                "put: Put file on remote server\n" +
+                "logout: log out\n");
     }
 
     /**

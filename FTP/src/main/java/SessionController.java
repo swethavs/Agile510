@@ -80,14 +80,14 @@ public class SessionController {
                 }
             } else if (command.startsWith(FTPCommandsEnum.CHMOD.command())) {
                 ExecChmod(command);
-            } else if (command.contains("rm") || command.contains("rmdir")) {
+            } else if (command.contains(FTPCommandsEnum.RM.command()) || command.contains(FTPCommandsEnum.RMDIR.command())) {
                 //if(command.size()<2) continue;
                 String path = (String) command.substring(command.indexOf(" ") + 1); //.elementAt(1);
                 String commandExec = (String) command.substring(0, command.indexOf(" "));
                 try {
-                    if (commandExec.equals("rm")) {
+                    if (commandExec.equals(FTPCommandsEnum.RM.command())) {
                         sftp.rm(path);
-                    } else if (commandExec.equals("rmdir")) {
+                    } else if (commandExec.equals(FTPCommandsEnum.RMDIR.command())) {
                         sftp.rmdir(path);
                     }
 

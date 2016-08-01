@@ -5,6 +5,7 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
+import org.apache.commons.net.ftp.FTP;
 
 import java.io.*;
 import java.util.Iterator;
@@ -21,14 +22,7 @@ public class SessionController {
     private static Properties prop = new Properties();
     private static InputStream input = null;
 
-    /**
-     * This method establishes the connection to FTP server
-     * @param host
-     * @param port
-     * @param user
-     * @param password
-     * @return
-     */
+
     /**
      * This method establishes the connection to FTP server
      * @param host
@@ -68,23 +62,23 @@ public class SessionController {
     public void ExecCommand(String command) {
         if (session.isConnected() && FTPConnectDemo.isLoggedIn) {
 
-            if (command.equals("ls")) {
+            if (command.equals(FTPCommandsEnum.LS.command())) {
                 Vector result = ExecLs();
                 Iterator myiterator = result.iterator();
                 while (myiterator.hasNext()) {
                     ChannelSftp.LsEntry current = (ChannelSftp.LsEntry) myiterator.next();
                     System.out.println(current.toString());
                 }
-            } else if (command.startsWith("mkdir")) {
+            } else if (command.startsWith(FTPCommandsEnum.MKDIR.command())) {
                 ExecMkdir(command);
-            } else if (command.equals("rd")) {
+            } else if (command.equals(FTPCommandsEnum.RD.command())) {
                 try {
                     //GetSingleFileRemotely();
                     ExecGetFilesRemotely();
                 } catch (Exception e) {
                     System.out.println("Error while getting the file remotely" + e);
                 }
-            } else if (command.startsWith("chmod")) {
+            } else if (command.startsWith(FTPCommandsEnum.CHMOD.command())) {
                 ExecChmod(command);
             } else if (command.contains("rm") || command.contains("rmdir")) {
                 //if(command.size()<2) continue;
@@ -101,19 +95,19 @@ public class SessionController {
                 } catch (SftpException e) {
                     System.out.println(e.toString());
                 }
-            } else if (command.startsWith("mv")) {
+            } else if (command.startsWith(FTPCommandsEnum.MV.command())) {
                 try {
                     ExecRename(command);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
-            } else if (command.equals("put")) {
+            } else if (command.equals(FTPCommandsEnum.PUT.command())) {
                 try {
                     ExecPutFilesRemotely();
                 } catch (Exception e) {
                     System.out.println("Error while getting the file remotely" + e);
                 }
-            } else if (command.equals("logout")) {
+            } else if (command.equals(FTPCommandsEnum.LOGOUT.command())) {
                 try {
                     Logout();
                 } catch (Exception e) {
@@ -386,6 +380,7 @@ public class SessionController {
         try {
             if (commandArgs.length > 1) {
                 sftp.mkdir(commandArgs[1]);
+                System.out.println("created directory " + commandArgs[1]);
                 return true;
             } else {
                 System.out.println("Please provide the directory name");
@@ -409,7 +404,7 @@ public class SessionController {
         try {
             if (commandArgs.length > 2) {
                 permissionType = Integer.parseInt(commandArgs[1],8);
-               filename = commandArgs[2];
+                filename = commandArgs[2];
                 sftp.chmod(permissionType,filename);
                 return true;
             } else {

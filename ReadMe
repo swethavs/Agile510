@@ -24,4 +24,5 @@ put--> to put file to the remote server from local server.
 rd-->to get files from the remote server to the local.
 chmod-->to change the permissions of thw file
 mv-->to rename a file
+logout-> to logout the current user
 q --> quit connection

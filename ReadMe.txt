@@ -17,9 +17,10 @@ Click on Run -> Click Run Application
 FTP Client gets connected.
 Enter the following commands to carry out various functions-
 ls --> to list directories.
+rd->Download/get single file from remote directory(this command will support downloading multiple files once that story is completed)
 mkdir directory_name --> to make directory on remote server.
 rm file_name --> to remove file on remote server.
 rmdir directory_name --> toremove directory on remote server.
-logout-logout from the currebt session
+logout-logout from the current session
 q --> quit the program
 

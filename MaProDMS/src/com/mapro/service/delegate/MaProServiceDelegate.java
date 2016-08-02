@@ -30,7 +30,7 @@ public class MaProServiceDelegate {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String storeMaProDocument(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public String storeMaProDocument(HttpServletRequest request, HttpServletResponse response, String username) throws Exception{
 		String responseResult = "";
 		try {
 			List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
@@ -62,7 +62,7 @@ public class MaProServiceDelegate {
 					maProCmsMetaData.setFileType("test");
 					maProCmsMetaData.setMaProAppName("MaPro");
 					maProCmsMetaData.setMaProAppRole("maProAdmin");
-					maProCmsMetaData.setMaProUserName("joshivi");
+					maProCmsMetaData.setMaProUserName(username);
 					maProCmsMetaData.setFileByteArray(bytesArrayWAR275);
 					
 					maProCmsDocument.setFileContent(content);

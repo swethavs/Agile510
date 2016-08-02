@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class MaProController {
 
+	private static String username;
 	@Autowired
 	public MaProServiceDelegate maProServiceDelegate;
 	
@@ -47,6 +48,7 @@ public class MaProController {
 		boolean isValidMaProUser = maProServiceDelegate.validateMaProUser(cmsLoginObject.getMaProUserId(),cmsLoginObject.getMaProPassword());
 		System.out.println("CMS USER ID:::::"+cmsLoginObject.getMaProUserId());
 		System.out.println("CMS PASSWORD ID:::::"+cmsLoginObject.getMaProPassword());
+		username=cmsLoginObject.getMaProUserId();
 		ModelAndView model = null;
 		isValidMaProUser = true;
 		if(isValidMaProUser){
@@ -66,7 +68,7 @@ public class MaProController {
 		String responseResult = "";
 		System.out.println("logged in user:::::"+request.getRemotePort());
 		try {
-			 responseResult = maProServiceDelegate.storeMaProDocument(request,response);
+			 responseResult = maProServiceDelegate.storeMaProDocument(request,response, username);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,7 +99,7 @@ public class MaProController {
 		System.out.println(objectId + "xas");
 		 GridFSDBFile girdFSDBFileList = maProServiceDelegate.getUserDocumentsInfo(objectId);
 //		 GridFSDBFile fileObj= girdFSDBFileList.get(0);
-		 response.setContentType("application/pdf");
+		 response.setContentType(response.getContentType());
 		 response.setHeader("Content-Disposition", "attachment; filename=testing.pdf");
 		 
 		 OutputStream out= null;

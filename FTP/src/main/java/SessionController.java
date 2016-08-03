@@ -1,11 +1,5 @@
 import com.google.common.annotations.VisibleForTesting;
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.SftpException;
-import org.apache.commons.net.ftp.FTP;
+import com.jcraft.jsch.*;
 
 import java.io.*;
 import java.util.Iterator;
@@ -118,12 +112,6 @@ public class SessionController {
     }
 
     /**
-     *This method downloads the remote files asked by the user
-     * It first displays the list of file
-     * s currently in the remote directory and then downloads them
-     *
-     */
-    /**
      *This method downloads the remote file asked by the user
      * It first displays the list of files currently in the remote directory and then downloads them
      *
@@ -185,6 +173,12 @@ public class SessionController {
             }
             System.out.println("Enter file name to download:");
             String fileToDownload = inp.nextLine();
+            String filenames[]=null;
+            if(fileToDownload.contains(" "));
+            {
+                filenames=fileToDownload.split(" ");
+            }
+
             System.out.println("fileToDownload is"+fileToDownload);
 
             input = new FileInputStream("ftp.properties");
@@ -198,11 +192,22 @@ public class SessionController {
                 System.out.println("Filename cannot be blank.\n");
                 return;
             }
+            boolean check=false;
+            String fDestDir=null;
+            for(int i=0;i<filenames.length;i++) {
+                fDestDir = prop.getProperty("directorytodownload");
+                sftp.get(filenames[i], fDestDir);
+                check=true;
+            }
+            if(check)
+            {
+                System.out.println("files successfully downloaded and saved in the path" +" "+ fDestDir);
 
-            String fDestDir = prop.getProperty("directorytodownload");
-            sftp.get(fileToDownload,fDestDir);
-            System.out.println("file successfully downloaded and saved in the path" +fDestDir);
+            }
+            else {
+                System.out.println("files cannot be downloaded,error while downloading");
 
+            }
 
         } catch (SftpException e)
         {
@@ -226,7 +231,6 @@ public class SessionController {
             }
         }
     }
-
 
 
     /**

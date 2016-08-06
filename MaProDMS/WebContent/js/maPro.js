@@ -63,10 +63,12 @@ function browseMaProDocument(){
 
 
 function displayFile(objId){
-	alert(objId);
-	var xhr = new XMLHttpRequest();
+	alert("CHANGED"+objId);
+	var urlToDownload = "/MaProDMS/getDocument/"+objId;
+	window.location.href = urlToDownload;
+	/*var xhr = new XMLHttpRequest();
 
-	xhr.open("POST", "/MaProDMS/getDocument/"+objId, true);
+	xhr.open("GET", "/MaProDMS/getDocument/"+objId, true);
 	xhr.send();
 	xhr.onload = function(e) {
 		if (this.status == 200) {
@@ -76,5 +78,5 @@ function displayFile(objId){
 			}
 			
 		}
-	};
+	};*/
 }

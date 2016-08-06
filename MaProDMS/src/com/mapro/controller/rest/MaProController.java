@@ -1,7 +1,9 @@
 package com.mapro.controller.rest;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -94,22 +96,32 @@ public class MaProController {
 
 	}
 	
-	@RequestMapping(value="/getDocument/{objectId}",method=RequestMethod.POST)
-	public void getOneDocumentContent(HttpServletRequest request, HttpServletResponse response, @PathVariable(value="objectId") String objectId) {
+	@RequestMapping(value="/getDocument/{objectId}",method=RequestMethod.GET)
+	public void getOneDocumentContent(HttpServletRequest request, HttpServletResponse response, @PathVariable(value="objectId") String objectId) throws IOException {
 		System.out.println(objectId + "xas");
 		 GridFSDBFile girdFSDBFileList = maProServiceDelegate.getUserDocumentsInfo(objectId);
 //		 GridFSDBFile fileObj= girdFSDBFileList.get(0);
-		 response.setContentType(response.getContentType());
-		 response.setHeader("Content-Disposition", "attachment; filename=testing.pdf");
+		 String fileNameFromMetaData = (String) girdFSDBFileList.getMetaData().get("maProFileName");
+		 String fileContentType = (String) girdFSDBFileList.getMetaData().get("maProFileType");
+		 response.setContentType(fileContentType);
+		 response.setHeader("Content-Disposition", "attachment; filename="+fileNameFromMetaData);
 		 
+		 
+		  
+		 ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		 girdFSDBFileList.writeTo(baos);
+		
 		 OutputStream out= null;
 		 try {
 			out=response.getOutputStream();
-			girdFSDBFileList.writeTo("D:\\textMaProLatest.pdf");
-			girdFSDBFileList.writeTo(out);
+			System.out.println("CODE CHANGED>>>>");
+			//girdFSDBFileList.writeTo("D:\\textMaProLatest345.pdf");
+			baos.writeTo(out);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			//out.close();
 		}
 	}
 

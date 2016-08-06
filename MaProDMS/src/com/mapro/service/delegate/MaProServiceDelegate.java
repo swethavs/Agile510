@@ -59,7 +59,7 @@ public class MaProServiceDelegate {
 					
 					
 					maProCmsMetaData.setFileName(fileName);
-					maProCmsMetaData.setFileType("test");
+					maProCmsMetaData.setFileType(item.getContentType());
 					maProCmsMetaData.setMaProAppName("MaPro");
 					maProCmsMetaData.setMaProAppRole("maProAdmin");
 					maProCmsMetaData.setMaProUserName(username);

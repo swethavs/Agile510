@@ -80,3 +80,28 @@ function displayFile(objId){
 		}
 	};*/
 }
+
+function logout(){
+	alert("Logging out");
+	var urlToDownload = "/MaProDMS/logout";
+	location.href = urlToDownload;
+	/*var xhr = new XMLHttpRequest();
+
+	xhr.open("GET", "/MaProDMS/logout", true);
+	xhr.send();
+	xhr.onload = function(e) {
+		if (this.status == 200) {
+			var	respJSON = this.response;
+			if(respJSON == "success"){
+				alert(respJSON.errorMessage);
+			}
+			
+		}
+	};*/
+}
+
+function login(){
+	alert("Logging in");
+	var urlToDownload = "/MaProDMS/cmslogin";
+	location.href = urlToDownload;
+}

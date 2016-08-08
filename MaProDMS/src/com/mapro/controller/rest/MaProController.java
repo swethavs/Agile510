@@ -96,6 +96,17 @@ public class MaProController {
 
 	}
 	
+	@RequestMapping(value="/logout",method=RequestMethod.GET)
+	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("Logging out");
+		ModelAndView model = new ModelAndView("cmsLogout");
+//		 CmsLoginObject cmsLoginObject = new CmsLoginObject();
+//		 model.addObject("cmsLoginObject", cmsLoginObject);
+		 return model;
+
+	}
+
+	
 	@RequestMapping(value="/getDocument/{objectId}",method=RequestMethod.GET)
 	public void getOneDocumentContent(HttpServletRequest request, HttpServletResponse response, @PathVariable(value="objectId") String objectId) throws IOException {
 		System.out.println(objectId + "xas");

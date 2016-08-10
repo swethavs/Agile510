@@ -13,6 +13,7 @@ Program Arguments -> linux.cs.pdx.edu 22 userID Password
 Choose Proper Working Directory
 Click on Apply
 Pass your arguments using ftp.properties file(set UserID , Password) or command line 
+Edit ftpProperties file to set the path to download as required.
 Click on Run -> Click Run Application
 FTP Client gets connected.
 Enter the following commands to carry out various functions-

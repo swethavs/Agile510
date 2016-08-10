@@ -254,7 +254,8 @@ public class SessionController {
             System.out.println("Please place the file to be uploaded in project folder location");
             System.out.println("The present working directory in the remote server is" +pwd);
             System.out.println("Files/directory in current working directory include");
-            ctr.ExecCommand("ls");
+            //ctr.ExecCommand("ls");
+            FTPConnectDemo.controller.ExecCommand("ls");
             System.out.println("Please place the file to be uploaded in project folder location");
             System.out.println("Do you want to navigate to a different directory? [y/n]");
             YOrNo = inp.nextLine();

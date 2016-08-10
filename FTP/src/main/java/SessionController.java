@@ -75,20 +75,26 @@ public class SessionController {
             } else if (command.startsWith(FTPCommandsEnum.CHMOD.command())) {
                 ExecChmod(command);
             } else if (command.contains(FTPCommandsEnum.RM.command()) || command.contains(FTPCommandsEnum.RMDIR.command())) {
-                //if(command.size()<2) continue;
-                String path = (String) command.substring(command.indexOf(" ") + 1); //.elementAt(1);
-                String commandExec = (String) command.substring(0, command.indexOf(" "));
-                try {
-                    if (commandExec.equals(FTPCommandsEnum.RM.command())) {
-                        sftp.rm(path);
-                    } else if (commandExec.equals(FTPCommandsEnum.RMDIR.command())) {
-                        sftp.rmdir(path);
-                    }
+                String[] commandArgs = command.split(" ");
+                if (commandArgs.length > 1) {
+                    String path = (String) commandArgs[1]; //.elementAt(1);
+                    String commandExec = (String) commandArgs[0];
+                    try {
+                        if (commandExec.equals(FTPCommandsEnum.RM.command())) {
+                            sftp.rm(path);
+                        } else if (commandExec.equals(FTPCommandsEnum.RMDIR.command())) {
+                            sftp.rmdir(path);
+                        }
 
-                    command = " ";
-                } catch (SftpException e) {
-                    System.out.println(e.toString());
+                        command = " ";
+                    } catch (SftpException e) {
+                        System.out.println(e.toString());
+                    }
                 }
+                else{
+                    System.out.println("Please give the file name or directory name to remove");
+                }
+
             } else if (command.startsWith(FTPCommandsEnum.MV.command())) {
                 try {
                     ExecRename(command);

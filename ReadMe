@@ -16,7 +16,7 @@ Pass your arguments using ftp.properties file(set UserID , Password) or command 
 Edit ftpProperties file to set the path to download as required.
 Click on Run -> Click Run Application
 FTP Client gets connected.
-Enter the following commands to carry out various functions-
+Enter the following commands to carry out various functions without space at the end-
 ls --> to list directories.
 mkdir directory_name --> to make directory on remote server.
 rm file_name --> to remove file on remote server.
